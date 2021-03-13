@@ -1,4 +1,4 @@
-import Card from "../Card/Card";
+import { Card } from "../index";
 
 import "./Grid.css";
 
@@ -8,10 +8,10 @@ const Grid = (props) => {
   return (
     <div className="grid">
       {characters
-        ? characters.map((character) => {
-            return <Card character={character}></Card>;
+        ? characters.map((character, index) => {
+            return <Card key={index} character={character}></Card>;
           })
-        : ""}
+        : null}
     </div>
   );
 };

@@ -1,9 +1,9 @@
 import "./Loader.css";
 
 const Loader = () => {
-    return {
-
-    }
+    return (
+        <div className="loader"></div>
+    );
 }
 
 export default Loader;

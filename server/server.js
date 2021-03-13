@@ -1,5 +1,4 @@
 const express = require("express");
-const axios = require("axios");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const dbConfig = require("./config/db.config");
@@ -37,31 +36,6 @@ db.mongoose
     process.exit();
   });
 
-// Simple response
-app.get("/", (req, res) => {
-  res.json({ message: "Hello" });
-});
-
-// Get characters
-app.get("/api/character", (req, res) => {
-  axios.get(`https://rickandmortyapi.com/api/character`).then((response) => {
-    res.json(response.data);
-  });
-});
-
-// Get characters page
-app.get("/api/character/:page", (req, res) => {
-  axios
-    .get(`https://rickandmortyapi.com/api/character`, {
-      params: {
-        page: req.params.page,
-      },
-    })
-    .then((response) => {
-      res.json(response.data);
-    });
-});
-
 function initial() {
   Role.estimatedDocumentCount((err, count) => {
     if (!err && count === 0) {
@@ -91,6 +65,7 @@ function initial() {
 // Routes
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
+require('./routes/characters.routes')(app);
 
 // Listen for requests
 app.listen(PORT, () => {

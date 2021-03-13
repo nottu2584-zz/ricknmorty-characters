@@ -2,4 +2,4 @@
 export { default as Card } from "./Card";
 export { default as Grid } from "./Grid";
 export { default as Loader } from "./Loader";
-export { default as Pagination } from "./Pagination/Pagination";
+export { default as Pagination } from "./Pagination";

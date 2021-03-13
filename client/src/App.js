@@ -1,44 +1,116 @@
-import "./App.css";
-import React, { useEffect, useState } from "react";
-import { Grid, Loader, Pagination } from "./components";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Router, Switch, Route, Link } from "react-router-dom";
 
-function App() {
-  const [characters, setCharacters] = useState();
-  const [pages, setPages] = useState(0);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(true);
+import "./App.css";
+
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Home from "./components/Home";
+import Profile from "./components/Profile";
+import BoardUser from "./components/BoardUser";
+import BoardAdmin from "./components/BoardAdmin";
+
+import { logout } from "./actions/auth";
+import { clearMessage } from "./actions/message";
+
+import { history } from "./helpers/history";
+
+const App = () => {
+  const [showAdminBoard, setShowAdminBoard] = useState(false);
+
+  const { user: currentUser } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!loading) setLoading(true);
-    axios
-      .get(`/api/character/${page}`)
-      .then((res) => {
-        if ("data" in res) {
-          const data = res.data;
-          if ("results" in data && data.results.length > 0)
-            setCharacters(data.results);
-          if ("info" in data) setPages(data.info.pages);
-        }
-      })
-      .catch(function (error) {
-        if (axios.isCancel(error)) {
-          // Do something
-        } else throw error;
-      })
-      .then(() => setLoading(false));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+    history.listen((location) => {
+      dispatch(clearMessage()); // clear message when changing location
+    });
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (currentUser) {
+      setShowAdminBoard(currentUser.roles.includes("ROLE_ADMIN"));
+    }
+  }, [currentUser]);
+
+  const logOut = () => {
+    dispatch(logout());
+  };
 
   return (
-    <div className="App">
-      <header className="App-header"></header>
-      <div className="App-content">
-        {!loading ? <Grid characters={characters}></Grid> : <Loader></Loader>}
-        <Pagination page={page} pages={pages} setPage={setPage}></Pagination>
+    <Router history={history}>
+      <div>
+        <nav className="navbar navbar-expand navbar-dark bg-dark">
+          <Link to={"/"} className="navbar-brand">           
+          </Link>
+          <div className="navbar-nav mr-auto">
+            <li className="nav-item">
+              <Link to={"/home"} className="nav-link">
+                Home
+              </Link>
+            </li>
+
+            {showAdminBoard && (
+              <li className="nav-item">
+                <Link to={"/admin"} className="nav-link">
+                  Admin Board
+                </Link>
+              </li>
+            )}
+
+            {currentUser && (
+              <li className="nav-item">
+                <Link to={"/user"} className="nav-link">
+                  User
+                </Link>
+              </li>
+            )}
+          </div>
+
+          {currentUser ? (
+            <div className="navbar-nav ml-auto">
+              <li className="nav-item">
+                <Link to={"/profile"} className="nav-link">
+                  {currentUser.username}
+                </Link>
+              </li>
+              <li className="nav-item">
+                <a href="/login" className="nav-link" onClick={logOut}>
+                  LogOut
+                </a>
+              </li>
+            </div>
+          ) : (
+            <div className="navbar-nav ml-auto">
+              <li className="nav-item">
+                <Link to={"/login"} className="nav-link">
+                  Login
+                </Link>
+              </li>
+
+              <li className="nav-item">
+                <Link to={"/register"} className="nav-link">
+                  Sign Up
+                </Link>
+              </li>
+            </div>
+          )}
+        </nav>
+
+        <div className="container mt-3">
+          <Switch>
+            <Route exact path={["/", "/home"]} component={Home} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/profile" component={Profile} />
+            <Route path="/user" component={BoardUser} />
+            <Route path="/admin" component={BoardAdmin} />
+          </Switch>
+        </div>
       </div>
-    </div>
+    </Router>
   );
-}
+};
 
 export default App;

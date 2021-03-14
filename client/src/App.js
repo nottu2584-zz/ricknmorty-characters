@@ -71,7 +71,7 @@ const App = () => {
           <Switch>
             <Route
               exact
-              path="/"
+              path={"/", "/characters"}
               render={() => {
                 return user ? (
                   <Redirect to="/characters" />
@@ -80,7 +80,6 @@ const App = () => {
                 );
               }}
             />
-            <Route path="/characters" component={Characters} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />

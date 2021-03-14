@@ -28,7 +28,10 @@ const useStyles = createUseStyles({
   },
   content: {
     boxSizing: "border-box",
+    display: "flex",
     flex: "1 1 auto",
+    flexDirection: "column",
+    justifyContent: "center",
     minWidth: "100%",
     padding: "30px",
   }

@@ -3,37 +3,38 @@ import { createUseStyles } from "react-jss";
 
 const useStyles = createUseStyles({
   pagination: {
-    display: "flex",
-    flex: "0 1 0",
-    justifyContent: "space-between",
+    textAlign: "right"
   },
   pager: {
+    borderRadius: "5px",
+    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)",
     display: "inline-block",
-    flex: "1 1 auto",
-    textAlign: "right",
+    flex: "0 1 auto",
     listStyle: "none",
     margin: "10px",
+    overflow: "hidden",
+    padding: 0,
+    transition: "all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)",
   },
   page: {
-    borderRadius: "5px",
+    cursor: "pointer",
     display: "inline-block",
     backgroundColor: "#fafafa",
     lineHeight: "2em",
-    margin: "0 0.25em",
     width: "2em",
-    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)",
-    transition: "all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)",
     textAlign: "center",
+    transition: "all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)",
     "&:last-child": {
       marginRight: 0,
     },
-    "&:hover": {
-      boxShadow: "0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)",
-    },
     "&.current": {
-      backgroundColor: "#424242",
+      backgroundColor: "#04afc9",
       color: "#ffffff",
+      fontWeight: "bold",
     },
+    "&:hover": {
+      backgroundColor: "#82fa67"
+    }
   },
 });
 

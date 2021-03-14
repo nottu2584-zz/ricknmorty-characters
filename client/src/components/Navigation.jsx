@@ -5,7 +5,7 @@ import { createUseStyles } from "react-jss";
 const useStyles = createUseStyles({
   navigation: {
     backgroundColor: "#ffffff",
-    boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
+    borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
     boxSizing: "border-box",
     display: "inline-flex",
     flex: "0 0 auto",

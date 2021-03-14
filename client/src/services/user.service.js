@@ -20,9 +20,11 @@ const getCharacters = (page) => {
     .get(API_URL + `character/${page}`, { headers: authHeader() })
 }
 
-export default {
+const UserService = {
   getPublicContent,
   getUserAccess,
   getAdminAccess,
   getCharacters
 };
+
+export default UserService;

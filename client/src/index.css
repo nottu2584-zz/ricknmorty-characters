@@ -1,6 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Open+Sans&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bungee&family=Open+Sans&display=swap");
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -8,11 +9,65 @@ body {
   display: flex;
   flex-direction: column;
   margin: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
   height: 100%;
+}
+
+input[type="text"],
+input[type="password"] {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  background: #ffffff;
+  outline: none;
+  font-size: 1rem;
+  line-height: 1.25em;
+  padding: 0.65em 0.75em;
+}
+
+label {
+  color: #04afc9;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+button {
+  background: #04afc9;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  color: #82fa67;
+  cursor: pointer;
+  font-family: "Bungee", cursive;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  outline: none;
+  padding: 0.5rem 1.5rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+button:hover {
+  background: #82fa67;
+  color: #04afc9;
+}
+
+.input-message {
+  font-size: .8em;
+  line-height: 1.2em;
+  margin-bottom: 0.5em;
+  text-transform: uppercase;
+}
+
+.input-message.danger {
+  color: #a94442;
+}
+
+.input-message.success {
+  color: #3c763d;
 }

@@ -22,7 +22,7 @@ const Characters = () => {
 
   useEffect(() => {
     setLoading(true);
-    UserService.getCharacters()
+    UserService.getCharacters(page)
       .then(
         (res) => {
           setCharacters(res.data.results);

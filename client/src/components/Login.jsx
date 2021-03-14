@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 
+import { FormMessage } from "./";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
@@ -12,17 +13,36 @@ import { createUseStyles } from "react-jss";
 
 const useStyles = createUseStyles({
   login: {
-    display: "flex",
+    flex: "1 1 auto",
     flexDirection: "column",
-    minHeight: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  form: {
+    textAlign: "left",
+    "& input": {
+      margin: ".5rem 0",
+    },
+    "& label": {
+      display: "inline-block",
+      marginTop: ".5rem",
+    },
+    "& button": {
+      marginTop: "1.5rem",
+      "& span": {
+        display: "inline-block",
+        lineHeight: "1em",
+      },
+    },
   },
 });
 
 const required = (value) => {
   if (!value) {
     return (
-      <div className="alert alert-danger" role="alert">
-        This field is required!
+      <div className="input-message danger" role="alert">
+        This field is required
       </div>
     );
   }
@@ -78,48 +98,50 @@ const Login = (props) => {
 
   return (
     <div className={classes.login}>
-      <div className="card card-container">
-        <Form onSubmit={handleLogin} ref={form}>
-          <>
-            <label htmlFor="username">Username</label>
-            <Input
-              type="text"
-              className="form-control"
-              name="username"
-              value={username}
-              onChange={onChangeUsername}
-              validations={[required]}
-            />
-          </>
-          <>
-            <label htmlFor="password">Password</label>
-            <Input
-              type="password"
-              className="form-control"
-              name="password"
-              value={password}
-              onChange={onChangePassword}
-              validations={[required]}
-            />
-          </>
-          <>
-            <button className="btn btn-primary btn-block" disabled={loading}>
-              {loading && (
-                <span className="spinner-border spinner-border-sm"></span>
-              )}
-              <span>Login</span>
-            </button>
-          </>
-          {message && (
-            <>
-              <div className="alert alert-danger" role="alert">
-                {message}
-              </div>
-            </>
-          )}
-          <CheckButton style={{ display: "none" }} ref={checkBtn} />
-        </Form>
-      </div>
+      {message && (
+        <>
+          <FormMessage
+            className="form-message danger"
+            role="alert"
+            title="Login failed"
+          >
+            {message}
+          </FormMessage>
+        </>
+      )}
+      <Form className={classes.form} onSubmit={handleLogin} ref={form}>
+        <>
+          <label htmlFor="username">Username</label>
+          <Input
+            type="text"
+            className={classes.input}
+            name="username"
+            value={username}
+            onChange={onChangeUsername}
+            validations={[required]}
+          />
+        </>
+        <>
+          <label htmlFor="password">Password</label>
+          <Input
+            type="password"
+            className={`${classes.input} ${classes.password}`}
+            name="password"
+            value={password}
+            onChange={onChangePassword}
+            validations={[required]}
+          />
+        </>
+        <>
+          <button className={classes.button} disabled={loading}>
+            {loading && (
+              <span className="spinner-border spinner-border-sm"></span>
+            )}
+            <span>Login</span>
+          </button>
+        </>
+        <CheckButton style={{ display: "none" }} ref={checkBtn} />
+      </Form>
     </div>
   );
 };

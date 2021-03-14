@@ -12,6 +12,11 @@ const User = mongoose.model(
         ref: "Role",
       },
     ],
+    favourites: [
+      {
+        id: { type: String }
+      },
+    ],
   })
 );
 

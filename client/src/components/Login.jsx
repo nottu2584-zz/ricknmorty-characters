@@ -8,6 +8,16 @@ import CheckButton from "react-validation/build/button";
 
 import { login } from "../actions/auth";
 
+import { createUseStyles } from "react-jss";
+
+const useStyles = createUseStyles({
+  login: {
+    display: "flex",
+    flexDirection: "column",
+    minHeight: "100%",
+  },
+});
+
 const required = (value) => {
   if (!value) {
     return (
@@ -30,6 +40,8 @@ const Login = (props) => {
   const { message } = useSelector((state) => state.message);
 
   const dispatch = useDispatch();
+
+  const classes = useStyles();
 
   const onChangeUsername = (e) => {
     const username = e.target.value;
@@ -62,20 +74,13 @@ const Login = (props) => {
     }
   };
 
-  if (isLoggedIn)
-    return <Redirect to="/characters" />;
+  if (isLoggedIn) return <Redirect to="/characters" />;
 
   return (
-    <div className="col-md-12">
+    <div className={classes.login}>
       <div className="card card-container">
-        <img
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          alt="profile-img"
-          className="profile-img-card"
-        />
-
         <Form onSubmit={handleLogin} ref={form}>
-          <div className="form-group">
+          <>
             <label htmlFor="username">Username</label>
             <Input
               type="text"
@@ -85,9 +90,8 @@ const Login = (props) => {
               onChange={onChangeUsername}
               validations={[required]}
             />
-          </div>
-
-          <div className="form-group">
+          </>
+          <>
             <label htmlFor="password">Password</label>
             <Input
               type="password"
@@ -97,23 +101,21 @@ const Login = (props) => {
               onChange={onChangePassword}
               validations={[required]}
             />
-          </div>
-
-          <div className="form-group">
+          </>
+          <>
             <button className="btn btn-primary btn-block" disabled={loading}>
               {loading && (
                 <span className="spinner-border spinner-border-sm"></span>
               )}
               <span>Login</span>
             </button>
-          </div>
-
+          </>
           {message && (
-            <div className="form-group">
+            <>
               <div className="alert alert-danger" role="alert">
                 {message}
               </div>
-            </div>
+            </>
           )}
           <CheckButton style={{ display: "none" }} ref={checkBtn} />
         </Form>

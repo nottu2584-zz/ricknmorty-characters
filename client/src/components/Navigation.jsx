@@ -8,6 +8,7 @@ const useStyles = createUseStyles({
     boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
     boxSizing: "border-box",
     display: "inline-flex",
+    flex: "0 0 auto",
     flexWrap: "wrap",
     justifyContent: "stretch",
     padding: "0 30px",
@@ -67,20 +68,8 @@ const Navigation = (props) => {
             </Link>
           </li>
         )}
-        {user && (
-          <li className={classes.item}>
-            <Link to={"/user"} className={classes.link}>
-              User
-            </Link>
-          </li>
-        )}
         {user ? (
           <>
-            <li className={classes.item}>
-              <Link to={"/characters"} className={classes.link}>
-                Characters
-              </Link>
-            </li>
             <li className={classes.item}>
               <a href="/login" className={classes.link} onClick={logout}>
                 Logout

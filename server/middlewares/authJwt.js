@@ -55,4 +55,5 @@ const authJwt = {
   verifyToken,
   isAdmin
 };
+
 module.exports = authJwt;

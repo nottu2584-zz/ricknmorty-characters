@@ -29,6 +29,9 @@ const useStyles = createUseStyles({
     textAlign: "center"
   },
   content: {
+    boxSizing: "border-box",
+    flex: "1 1 auto",
+    minWidth: "100%",
     padding: "30px",
   }
 });

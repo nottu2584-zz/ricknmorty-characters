@@ -1,27 +1,28 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 
-const API_URL = "http://localhost:3001/api/test/";
+const API_URL = "http://localhost:3001/api/";
 
 const getPublicContent = () => {
-  return axios.get(API_URL + "all");
+  return axios.get(API_URL + "test/all");
 };
 
-const getUserBoard = () => {
-  return axios.get(API_URL + "user", { headers: authHeader() });
+const getUserAccess = () => {
+  return axios.get(API_URL + "test/user", { headers: authHeader() });
 };
 
-const getAdminBoard = () => {
-  return axios.get(API_URL + "admin", { headers: authHeader() });
+const getAdminAccess = () => {
+  return axios.get(API_URL + "test/admin", { headers: authHeader() });
 };
 
 const getCharacters = (page) => {
   return axios
-    .get(`/api/character/${page}`, { headers: authHeader() })
+    .get(API_URL + `character/${page}`, { headers: authHeader() })
 }
 
 export default {
   getPublicContent,
-  getUserBoard,
-  getAdminBoard,
+  getUserAccess,
+  getAdminAccess,
+  getCharacters
 };

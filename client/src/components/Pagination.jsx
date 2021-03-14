@@ -4,6 +4,7 @@ import { createUseStyles } from "react-jss";
 const useStyles = createUseStyles({
   pagination: {
     display: "flex",
+    flex: "0 1 0",
     justifyContent: "space-between",
   },
   pager: {

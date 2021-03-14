@@ -51,7 +51,7 @@ const Login = (props) => {
     if (checkBtn.current.context._errors.length === 0) {
       dispatch(login(username, password))
         .then(() => {
-          props.history.push("/profile");
+          props.history.push("/characters");
           window.location.reload();
         })
         .catch(() => {
@@ -62,9 +62,8 @@ const Login = (props) => {
     }
   };
 
-  if (isLoggedIn) {
-    return <Redirect to="/profile" />;
-  }
+  if (isLoggedIn)
+    return <Redirect to="/characters" />;
 
   return (
     <div className="col-md-12">

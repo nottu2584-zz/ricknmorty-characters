@@ -33,15 +33,16 @@ const useStyles = createUseStyles({
     name: {
       fontSize: "1.5em",
     },
-    status: {
+    "& .status": {
       textTransform: "capitalize",
+      fontSize: "0.75em",
       "&::before": {
-        display: "inline-block",
-        content: '""',
-        borderRadius: "50%",
-        padding: "0.25em",
-        marginRight: "0.25em",
         backgroundColor: "#c2c2c2",
+        borderRadius: "50%",
+        content: '""',
+        display: "inline-block",
+        marginRight: "0.25em",
+        padding: "0.25em",
         verticalAlign: "baseline",
       },
       "& .dead::before": {
@@ -74,7 +75,7 @@ const Card = (props) => {
       </div>
       <div className={classes.details}>
         <div className={classes.details.name}>{character.name}</div>
-        <div className={`${classes.details} ${character.status.toLowerCase()}`}>
+        <div className={`status ${character.status.toLowerCase()}`}>
           {character.status} - {character.species}
         </div>
       </div>

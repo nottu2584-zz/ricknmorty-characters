@@ -5,6 +5,7 @@ const useStyles = createUseStyles({
   grid: {
     alignItems: "center",
     display: "inline-flex",
+    flex: "1 1 auto",
     flexWrap: "wrap",
     justifyContent: "center",
   },

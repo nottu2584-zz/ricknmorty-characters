@@ -1,14 +1,23 @@
 import axios from "axios";
 import { default as React, useEffect, useState } from "react";
-import { Grid, Loader, Pagination } from "./components";
+import { Grid, Loader, Pagination } from "./";
+import { createUseStyles } from "react-jss";
 
-import "./App.css";
+const useStyles = createUseStyles({
+  characters: {
+    display: "flex",
+    flexDirection: "column",
+    minHeight: "100%"
+  },
+});
 
 const Characters = () => {
   const [characters, setCharacters] = useState();
   const [pages, setPages] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+
+  const classes = useStyles();
 
   useEffect(() => {
     if (!loading) setLoading(true);
@@ -32,12 +41,9 @@ const Characters = () => {
   }, [page]);
 
   return (
-    <div className="App">
-      <header className="App-header"></header>
-      <div className="App-content">
+    <div className={classes.characters}>
         {!loading ? <Grid characters={characters}></Grid> : <Loader></Loader>}
         <Pagination page={page} pages={pages} setPage={setPage}></Pagination>
-      </div>
     </div>
   );
 };

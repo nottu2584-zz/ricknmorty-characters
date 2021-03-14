@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Router, Switch, Route, Link } from "react-router-dom";
+import { Router, Switch, Route, Redirect } from "react-router-dom";
 
 import "./App.css";
 
+import { Characters, Navigation } from "./components";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Home from "./components/Home";
 import Profile from "./components/Profile";
 import BoardUser from "./components/BoardUser";
 import BoardAdmin from "./components/BoardAdmin";
@@ -16,11 +16,30 @@ import { clearMessage } from "./actions/message";
 
 import { history } from "./helpers/history";
 
-const App = () => {
-  const [showAdminBoard, setShowAdminBoard] = useState(false);
+import { createUseStyles } from "react-jss";
 
-  const { user: currentUser } = useSelector((state) => state.auth);
+const useStyles = createUseStyles({
+  app: {
+    backgroundColor: "#f5f5f5",
+    alignItems: "center",
+    color: "#141414",
+    display: "flex",
+    flexDirection: "column",
+    minHeight: "100%",
+    textAlign: "center"
+  },
+  content: {
+    padding: "30px",
+  }
+});
+
+const App = () => {
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  const { user: user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
+  const classes = useStyles();
 
   useEffect(() => {
     history.listen((location) => {
@@ -29,78 +48,36 @@ const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (currentUser) {
-      setShowAdminBoard(currentUser.roles.includes("ROLE_ADMIN"));
-    }
-  }, [currentUser]);
+    if (user)
+      setIsAdmin(user.roles.includes("ROLE_ADMIN"));
+  }, [user]);
 
-  const logOut = () => {
+  const handleLogout = () => {
     dispatch(logout());
   };
 
   return (
     <Router history={history}>
-      <div>
-        <nav className="navbar navbar-expand navbar-dark bg-dark">
-          <Link to={"/"} className="navbar-brand">           
-          </Link>
-          <div className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <Link to={"/home"} className="nav-link">
-                Home
-              </Link>
-            </li>
-
-            {showAdminBoard && (
-              <li className="nav-item">
-                <Link to={"/admin"} className="nav-link">
-                  Admin Board
-                </Link>
-              </li>
-            )}
-
-            {currentUser && (
-              <li className="nav-item">
-                <Link to={"/user"} className="nav-link">
-                  User
-                </Link>
-              </li>
-            )}
-          </div>
-
-          {currentUser ? (
-            <div className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link to={"/profile"} className="nav-link">
-                  {currentUser.username}
-                </Link>
-              </li>
-              <li className="nav-item">
-                <a href="/login" className="nav-link" onClick={logOut}>
-                  LogOut
-                </a>
-              </li>
-            </div>
-          ) : (
-            <div className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link to={"/login"} className="nav-link">
-                  Login
-                </Link>
-              </li>
-
-              <li className="nav-item">
-                <Link to={"/register"} className="nav-link">
-                  Sign Up
-                </Link>
-              </li>
-            </div>
-          )}
-        </nav>
-
-        <div className="container mt-3">
+      <div className={classes.app}>
+        <Navigation
+          admin={isAdmin}
+          user={user}
+          logout={handleLogout}
+        ></Navigation>
+        <div className={classes.content}>
           <Switch>
-            <Route exact path={["/", "/home"]} component={Home} />
+            <Route
+              exact
+              path="/"
+              render={() => {
+                return user ? (
+                  <Redirect to="/characters" />
+                ) : (
+                  <Redirect to="/login" />
+                );
+              }}
+            />
+            <Route path="/characters" component={Characters} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />

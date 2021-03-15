@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { createUseStyles } from "react-jss";
 
+const NEARBY = 2;
+
 const useStyles = createUseStyles({
   pagination: {
-    textAlign: "right"
+    textAlign: "right",
   },
   pager: {
     borderRadius: "5px",
@@ -33,49 +35,64 @@ const useStyles = createUseStyles({
       fontWeight: "bold",
     },
     "&:hover": {
-      backgroundColor: "#82fa67"
-    }
+      backgroundColor: "#82fa67",
+    },
+    "&.ellipsis": {
+      cursor: "default"
+    },
+    "&.ellipsis:hover": {
+      backgroundColor: "#fafafa"
+    },
   },
 });
 
 const Pagination = (props) => {
-  const [items, setItems] = useState(0);
+  const [items, setItems] = useState();
   const { page, pages, setPage } = props;
-
   const classes = useStyles();
 
   useEffect(() => {
     if (pages) {
       let arr = [];
-      for (let index = 0; index < pages; index++) {
-        arr.push(
-          <li
-            key={index}
-            className={`${classes.page} page-${index + 1}${
-              page === index + 1 ? " current" : ""
-            }`}
-            onClick={
-              page !== index + 1
-                ? () => {
-                    setPage(index + 1);
-                  }
-                : null
-            }
-          >
-            {index + 1}
-          </li>
-        );
+      for (let index = 0; index < pages; index++) {  
+        arr.push({ page: index + 1 });
       }
       setItems(arr);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, pages]);
+  }, [pages]);
+
+  const nearby = (page, index) => {
+    return page > index - NEARBY && page < index + NEARBY*NEARBY && page !== index + 1
+  };
+
+  const edging = (pages, index) => {
+    return index <= NEARBY || index >= pages - NEARBY - 1
+  };
+
+  const neighbor = (page, pages, index) => {
+    return page === index + 1 || nearby(page, index) || edging(pages, index);
+  };
 
   return (
     <div className={classes.pagination}>
-      <ul className={classes.pager}>{items}</ul>
+      <ul className={classes.pager}>
+        {items ? 
+          items.map((item, index) =>
+            neighbor(page, pages, index) == true ?
+              <li
+                key={index}
+                className={`${classes.page} page-${item.page}${page === item.page ? " current" : ""}`}
+                onClick={page !== item.page ? () => { setPage(item.page); } : null}
+              >
+                {item.page}
+              </li>
+            : !neighbor(page, pages, index) && neighbor(page, pages, index + 1) ? <li key={index} className={`${classes.page} ellipsis`}>...</li> : null
+          )
+        : null}
+      </ul>
     </div>
   );
-};
+}; 
 
 export default Pagination;

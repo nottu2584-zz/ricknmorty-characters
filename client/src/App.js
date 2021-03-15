@@ -1,20 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { createUseStyles } from "react-jss";
 import { useDispatch, useSelector } from "react-redux";
-import { Router, Switch, Route, Redirect } from "react-router-dom";
-
-import "./App.css";
-
-import { Characters, Navigation } from "./components";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Profile from "./components/Profile";
-
+import { Redirect, Route, Router, Switch } from "react-router-dom";
 import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
-
+import { Characters, Login, Navigation, NotFound, Register } from "./components";
 import { history } from "./helpers/history";
 
-import { createUseStyles } from "react-jss";
+import "./App.css";
 
 const useStyles = createUseStyles({
   app: {
@@ -94,7 +87,7 @@ const App = () => {
             />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
-            <Route exact path="/profile" component={Profile} />
+            <Route component={NotFound} />
           </Switch>
         </div>
       </div>

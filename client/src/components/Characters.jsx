@@ -13,12 +13,11 @@ const useStyles = createUseStyles({
 });
 
 const Characters = () => {
-  let { id } = useParams();
+  let { page } = useParams();
 
   const [content, setContent] = useState("");
   const [characters, setCharacters] = useState();
   const [pages, setPages] = useState(0);
-  const [page, setPage] = useState(id | 1);
   const [loading, setLoading] = useState(true);
 
   const classes = useStyles();
@@ -28,6 +27,7 @@ const Characters = () => {
     UserService.getCharacters(page)
       .then(
         (res) => {
+          // history.push(`/characters/${page}`);
           setCharacters(res.data.results);
           setPages(res.data.info.pages);
         },
@@ -54,7 +54,6 @@ const Characters = () => {
             <Pagination
               page={page}
               pages={pages}
-              setPage={setPage}
             ></Pagination>
           </>
         ) : (

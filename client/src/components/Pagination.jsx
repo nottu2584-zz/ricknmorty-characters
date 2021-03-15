@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createUseStyles } from "react-jss";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const NEARBY = 2;
 
@@ -27,6 +27,11 @@ const useStyles = createUseStyles({
     width: "2em",
     textAlign: "center",
     transition: "all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)",
+    "& a": {
+      display: "block",
+      textDecoration: "none",
+      color: "inherit"
+    },
     "&:last-child": {
       marginRight: 0,
     },
@@ -48,10 +53,9 @@ const useStyles = createUseStyles({
 });
 
 const Pagination = (props) => {
-  const { page, pages, setPage } = props;
+  const { page, pages } = props;
   
   const [items, setItems] = useState();
-  const history = useHistory();
 
   const classes = useStyles();
 
@@ -75,12 +79,9 @@ const Pagination = (props) => {
   };
 
   const neighbor = (page, pages, index) => {
+    if (isNaN(page))
+      page = parseInt(page);
     return page === index + 1 || nearby(page, index) || edging(pages, index);
-  };
-
-  const handleClick = (e, page) => {
-    history.push(`/characters/${page}`);
-    setPage(page); 
   };
 
   return (
@@ -91,10 +92,9 @@ const Pagination = (props) => {
             neighbor(page, pages, index) === true ?
               <li
                 key={index}
-                className={`${classes.page} page-${item.page}${page === item.page ? " current" : ""}`}
-                onClick={page !== item.page ? (e) => { handleClick(e, item.page) } : null}
+                className={`${classes.page} page-${item.page} ${parseInt(page) === item.page ? "current" : ""}`}
               >
-                {item.page}
+                <Link to={`/characters/${item.page}`}>{item.page}</Link>
               </li>
             : !neighbor(page, pages, index) && neighbor(page, pages, index + 1) ? <li key={index} className={`${classes.page} ellipsis`}>...</li> : null
           )

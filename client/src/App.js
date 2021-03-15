@@ -75,7 +75,7 @@ const App = () => {
               }}
             />
             <Route
-              path="/characters/:id?"
+              path="/characters/:page?"
               render={() => {
                 return user ? (
                   <Characters></Characters>

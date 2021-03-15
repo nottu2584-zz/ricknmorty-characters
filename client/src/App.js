@@ -75,15 +75,14 @@ const App = () => {
               }}
             />
             <Route
-              path="/characters"
+              path="/characters/:id?"
               render={() => {
                 return user ? (
-                  <Redirect to="/characters" />
+                  <Characters></Characters>
                 ) : (
                   <Redirect to="/login" />
                 );
               }}
-              component={Characters}
             />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />

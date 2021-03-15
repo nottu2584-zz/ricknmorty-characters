@@ -2,11 +2,13 @@ import { createUseStyles } from "react-jss";
 
 const useStyles = createUseStyles({
   card: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    width: "100%",
+    flex: "1 1 calc(1000% - 20px)",
     backgroundColor: "#ffffff",
     borderRadius: 5,
-    display: "inline-flex",
-    flexWrap: "wrap",
-    flex: "0 1 calc(25% - 20px)",
     margin: 10,
     overflow: "hidden",
     boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
@@ -17,17 +19,17 @@ const useStyles = createUseStyles({
   },
   avatar: {
     backgroundColor: "#c2c2c2",
-    flex: "2 1 0",
+    flex: "100%",
     lineHeight: "0",
     "& img": {
-      maxHeight: "100%",
-      maxWidth: "100%",
+      height: "100%",
+      width: "100%",
       margin: 0,
       objectFit: "cover",
     },
   },
   details: {
-    flex: "3 1 0",
+    flex: "100%",
     padding: ".75rem",
     textAlign: "left",
     name: {
@@ -53,13 +55,21 @@ const useStyles = createUseStyles({
       },
     },
   },
-  "@media only screen and (max-width: 768px)": {
+  "@media only screen and (min-width: 480px)": {
+    card: {
+      flex: "1 1 calc(50% - 20px)",
+    },
+  },
+  "@media only screen and (min-width: 768px)": {
+    card: {
+      flex: "1 1 calc(25% - 20px)",
+    },
     avatar: {
-      flex: "1 1 100%",
+      flex: "2 1 0",
     },
     details: {
-      flex: "1 1 100%"
-    }
+      flex: "4 1 0",
+    },
   },
 });
 

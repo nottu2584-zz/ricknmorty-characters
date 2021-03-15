@@ -2,6 +2,7 @@ import { default as React, useEffect, useState } from "react";
 import { Grid, Loader, Pagination } from "./";
 import { createUseStyles } from "react-jss";
 import UserService from "../services/user.service";
+import { useParams } from "react-router-dom";
 
 const useStyles = createUseStyles({
   characters: {
@@ -12,10 +13,12 @@ const useStyles = createUseStyles({
 });
 
 const Characters = () => {
+  let { id } = useParams();
+
   const [content, setContent] = useState("");
   const [characters, setCharacters] = useState();
   const [pages, setPages] = useState(0);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(id | 1);
   const [loading, setLoading] = useState(true);
 
   const classes = useStyles();

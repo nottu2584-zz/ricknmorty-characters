@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { createUseStyles } from "react-jss";
+import { useHistory } from "react-router-dom";
 
 const NEARBY = 2;
 
@@ -47,8 +48,11 @@ const useStyles = createUseStyles({
 });
 
 const Pagination = (props) => {
-  const [items, setItems] = useState();
   const { page, pages, setPage } = props;
+  
+  const [items, setItems] = useState();
+  const history = useHistory();
+
   const classes = useStyles();
 
   useEffect(() => {
@@ -74,16 +78,21 @@ const Pagination = (props) => {
     return page === index + 1 || nearby(page, index) || edging(pages, index);
   };
 
+  const handleClick = (e, page) => {
+    history.push(`/characters/${page}`);
+    setPage(page); 
+  };
+
   return (
     <div className={classes.pagination}>
       <ul className={classes.pager}>
         {items ? 
           items.map((item, index) =>
-            neighbor(page, pages, index) == true ?
+            neighbor(page, pages, index) === true ?
               <li
                 key={index}
                 className={`${classes.page} page-${item.page}${page === item.page ? " current" : ""}`}
-                onClick={page !== item.page ? () => { setPage(item.page); } : null}
+                onClick={page !== item.page ? (e) => { handleClick(e, item.page) } : null}
               >
                 {item.page}
               </li>

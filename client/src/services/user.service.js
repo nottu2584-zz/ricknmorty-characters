@@ -17,14 +17,19 @@ const getAdminAccess = () => {
 
 const getCharacters = (page) => {
   return axios
-    .get(API_URL + `character/${page}`, { headers: authHeader() })
+    .get(API_URL + `characters/${page}`, { headers: authHeader() })
+}
+
+const getCharacter = (id) => {
+  return axios.get(API_URL + `character/${id}`, { headers: authHeader() });
 }
 
 const UserService = {
   getPublicContent,
   getUserAccess,
   getAdminAccess,
-  getCharacters
+  getCharacters,
+  getCharacter
 };
 
 export default UserService;

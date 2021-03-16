@@ -1,18 +1,40 @@
 import { createUseStyles } from "react-jss";
+import { Link } from "react-router-dom";
 
 const useStyles = createUseStyles({
+  status: {
+    textTransform: "capitalize",
+    fontSize: ".8rem",
+    "&::before": {
+      backgroundColor: "#c2c2c2",
+      borderRadius: "50%",
+      content: '""',
+      display: "inline-block",
+      marginRight: ".25rem",
+      padding: ".25rem",
+      verticalAlign: "baseline",
+    },
+    "&.dead::before": {
+      backgroundColor: "#d84315",
+    },
+    "&.alive::before": {
+      backgroundColor: "#8bc34a",
+    },
+  },
   card: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    width: "100%",
-    flex: "1 1 calc(1000% - 20px)",
     backgroundColor: "#ffffff",
     borderRadius: 5,
+    boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
+    color: "inherit",
+    display: "flex",
+    flex: "1 1 calc(100% - 20px)",
+    flexDirection: "row",
+    flexWrap: "wrap",
     margin: 10,
     overflow: "hidden",
-    boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
+    textDecoration: "none",
     transition: "all 0.3s cubic-bezier(.25,.8,.25,1)",
+    width: "100%",
     "&:hover": {
       boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
     },
@@ -20,7 +42,7 @@ const useStyles = createUseStyles({
   avatar: {
     backgroundColor: "#c2c2c2",
     flex: "100%",
-    lineHeight: "0",
+    lineHeight: 0,
     "& img": {
       height: "100%",
       width: "100%",
@@ -32,8 +54,8 @@ const useStyles = createUseStyles({
     flex: "100%",
     padding: ".75rem",
     textAlign: "left",
-    name: {
-      fontSize: "1.5em",
+    "& .name": {
+      fontSize: "1.2em",
     },
     "& .status": {
       textTransform: "capitalize",
@@ -47,10 +69,10 @@ const useStyles = createUseStyles({
         padding: "0.25em",
         verticalAlign: "baseline",
       },
-      "& .dead::before": {
+      "&.dead::before": {
         backgroundColor: "#d84315",
       },
-      "& .alive::before": {
+      "&.alive::before": {
         backgroundColor: "#8bc34a",
       },
     },
@@ -79,17 +101,17 @@ const Card = (props) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.card}>
+    <Link className={classes.card} to={`/character/${character.id}`}>
       <div className={classes.avatar}>
         <img src={character.image} alt={character.name}></img>
       </div>
       <div className={classes.details}>
-        <div className={classes.details.name}>{character.name}</div>
+        <div className="name">{character.name}</div>
         <div className={`status ${character.status.toLowerCase()}`}>
           {character.status} - {character.species}
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

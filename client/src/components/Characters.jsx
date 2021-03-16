@@ -27,7 +27,6 @@ const Characters = () => {
     UserService.getCharacters(page)
       .then(
         (res) => {
-          // history.push(`/characters/${page}`);
           setCharacters(res.data.results);
           setPages(res.data.info.pages);
         },

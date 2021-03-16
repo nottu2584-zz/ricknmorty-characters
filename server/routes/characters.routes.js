@@ -13,7 +13,7 @@ module.exports = function (app) {
   
   // Get characters
   app.get(
-    "/api/character",
+    "/api/characters",
     [
       authJwt.verifyToken,
       (req, res) => {
@@ -29,7 +29,7 @@ module.exports = function (app) {
 
   // Get characters page
   app.get(
-    "/api/character/:page",
+    "/api/characters/:page",
     [
       authJwt.verifyToken,
       (req, res) => {
@@ -39,6 +39,22 @@ module.exports = function (app) {
               page: req.params.page,
             },
           })
+          .then((response) => {
+            res.json(response.data);
+          });
+      },
+    ],
+    controller.userAccess
+  );
+
+  // Get single character
+  app.get(
+    "/api/character/:id",
+    [
+      authJwt.verifyToken,
+      (req, res) => {
+        axios
+          .get(`https://rickandmortyapi.com/api/character/${req.params.id}`)
           .then((response) => {
             res.json(response.data);
           });

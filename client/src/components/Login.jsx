@@ -134,10 +134,7 @@ const Login = (props) => {
         </>
         <>
           <button className={classes.button} disabled={loading}>
-            {loading && (
-              <span className="spinner-border spinner-border-sm"></span>
-            )}
-            <span>Login</span>
+            Login
           </button>
         </>
         <CheckButton style={{ display: "none" }} ref={checkBtn} />

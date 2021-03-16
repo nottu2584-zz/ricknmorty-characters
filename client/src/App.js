@@ -4,15 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Route, Router, Switch } from "react-router-dom";
 import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
-import { Characters, Login, Navigation, NotFound, Register } from "./components";
+import { Character, Characters, Login, Navigation, NotFound, Register } from "./components";
 import { history } from "./helpers/history";
 
 import "./App.css";
 
 const useStyles = createUseStyles({
   app: {
-    backgroundColor: "#f5f5f5",
     alignItems: "center",
+    backgroundColor: "#f5f5f5",
     color: "#141414",
     display: "flex",
     flexDirection: "column",
@@ -33,7 +33,7 @@ const useStyles = createUseStyles({
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const { user: user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const classes = useStyles();
@@ -68,17 +68,38 @@ const App = () => {
               path="/"
               render={() => {
                 return user ? (
-                  <Redirect to="/characters" />
+                  <Redirect to="/characters/1" />
                 ) : (
                   <Redirect to="/login" />
                 );
               }}
             />
             <Route
-              path="/characters/:page?"
+              exact
+              path="/characters"
+              render={() => {
+                return user ? (
+                  <Redirect to="/characters/1" />
+                ) : (
+                  <Redirect to="/login" />
+                );
+              }}
+            />
+            <Route
+              path="/characters/:page"
               render={() => {
                 return user ? (
                   <Characters></Characters>
+                ) : (
+                  <Redirect to="/login" />
+                );
+              }}
+            />
+            <Route
+              path="/character/:id"
+              render={() => {
+                return user ? (
+                  <Character></Character>
                 ) : (
                   <Redirect to="/login" />
                 );

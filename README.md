@@ -1,6 +1,6 @@
 # Rick & Morty Characters
 
-I created this approach to the [Rick & Morty API](https://rickandmortyapi.com/) using [MERN](https://www.mongodb.com/mern-stack) stack technologies. The backend is located under `server` and the frontend is located in `client`.
+I created this approach to the [Rick & Morty API](https://rickandmortyapi.com/) using [MERN](https://www.mongodb.com/mern-stack) stack technologies, I chose MongoDB because I did not work with it before and thought it would be a nice chance to try something different. You can find the backend located under `server` and the frontend in `client`.
 
 The client of this project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -50,13 +50,51 @@ Open [http://localhost:3001](http://localhost:3001) to access it in the browser.
 
 ## Server API
 
+Most of these calls require that you have authenticated your session through `/api/auth/signin`. You can create a new user with `/api/auth/signup`, and you do need a local service running your MongoDB installation.
+
 ### `/api/test/all`
+Tests free access content.
 ### `/api/test/user`
-### `/api/favorite/add`
-### `/api/favorite/remove`
+Tests user authored content.
 ### `/api/test/admin`
+Tests admin authored content.
+### `/api/favorite/add`
+Given a user, adds a favorite to his favorites list. 
+```
+{
+    username: string,
+    favorite: string
+}
+```
+### `/api/favorite/remove`
+Given a user, removes a favorite to his favorites list. 
+```
+{
+    username: "user",
+    favorite: "35"
+}
+```
 ### `/api/auth/signup`
+Given a set of data, creates a new user. 
+```
+{
+    "username": "user",
+    "email": "user@test.com",
+    "password": "user",
+    "roles": ["user"]
+}
+```
 ### `/api/auth/signin`
+Given a set of data, authenticates an existing user. 
+```
+{
+    "username": "user",
+    "password": "password"
+}
+```
 ### `/api/characters`
+Gets all existing characters.
 ### `/api/characters/:page`
+Gets an specific characters page.
 ### `/api/character/:id`
+Gets a single character given an `id`.

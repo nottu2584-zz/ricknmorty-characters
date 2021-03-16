@@ -14,6 +14,14 @@ module.exports = function (app) {
 
   app.get("/api/test/user", [authJwt.verifyToken], controller.userAccess);
 
+  app.post("/api/favorite/add", [authJwt.verifyToken], controller.addFavorite);
+
+  app.post(
+    "/api/favorite/remove",
+    [authJwt.verifyToken],
+    controller.removeFavorite
+  );
+
   app.get(
     "/api/test/admin",
     [authJwt.verifyToken, authJwt.isAdmin],

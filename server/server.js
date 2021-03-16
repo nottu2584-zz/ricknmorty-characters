@@ -14,10 +14,10 @@ var corsOptions = {
 app.use(cors(corsOptions));
 
 // Parse requests of content-type - application/json
-app.use(bodyParser.json());
+app.use(express.json());
 
 // Parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 const db = require("./models");
 const Role = db.role;

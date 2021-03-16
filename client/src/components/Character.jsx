@@ -82,6 +82,7 @@ const useStyles = createUseStyles({
   "@media only screen and (min-width: 768px)": {
     content: {
       flexWrap: "nowrap",
+      maxWidth: "1024px"
     },
     avatar: {
       flex: "0 0 300px",
